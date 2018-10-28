@@ -1,17 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>freshii-challenge</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:extra-light|Vast+Shadow" rel="stylesheet">
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but freshii-challenge doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <h4> Created By Adva Lynn Masliah </h4>
+
+    <div class="pac-card" id="pac-card">
+      <div id="pac-container">
+        <h2>Add a New City</h2> <input id="pac-input" type="text"
+            placeholder="Enter a location">
+      </div>
+    </div>
+    <div id="infowindow-content">
+      <img src="" width="16" height="16" id="place-icon">
+      <span id="place-name"  class="title"></span><br>
+      <span id="place-address"></span>
+    </div>
+    <div id="app">
+      <div id="weather">
+         <span class="centered"><h1> {{city}} {{currentTemp}}° </h1></span><br>
+         <button class="switchCity" v-on:click=switchCity>Switch to {{alt}}</button>
+         <div class="tempValues">
+          <span> <p>
+            Min {{minTemp}}° <br>
+            Max {{maxTemp}}° <br>
+            Sunrise: {{sunrise}} <br>
+            Sunset: {{sunset}} <br>
+            Humidity: {{humidity}} <br>
+            Pressure: {{pressure}} <br>
+            Wind: {{wind}} </p>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script>
+    function initMap() {
+      var options = {
+        language: 'en-GB',
+        types: ['(cities)']
+      };
+      var card = document.getElementById('pac-card');
+      var input = document.getElementById('pac-input');
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
+      // Set the data fields to return when the user selects a place.
+      autocomplete.setFields(
+          ['address_components', 'geometry', 'icon', 'name']);
+
+      autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        // If the place has a geometry, then present it on a map.
+        var address = '';
+        if (place.address_components) {
+          address = [
+            (place.address_components[0] && place.address_components[0].short_name || ''),
+          ].join(' ');
+        }
+        this.city = address;
+        window.alert(address);
+        window.weatherApp.city = window.weatherApp.alt;
+        window.weatherApp.alt = address;
+        window.weatherApp.switchCity();
+      });
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?types=(cities)&key=[GOOGLE-API-KEY]&libraries=places&callback=initMap" async defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </body>
 </html>
