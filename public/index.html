@@ -54,18 +54,9 @@
 
       autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
-        // If the place has a geometry, then present it on a map.
-        var address = '';
-        if (place.address_components) {
-          address = [
-            (place.address_components[0] && place.address_components[0].short_name || ''),
-          ].join(' ');
-        }
-        this.city = address;
-        window.alert(address);
-        window.weatherApp.city = window.weatherApp.alt;
-        window.weatherApp.alt = address;
-        window.weatherApp.switchCity();
+        window.weatherApp.new_city = (place.address_components[0] && place.address_components[0].short_name || '');
+        window.weatherApp.new_country = ","+(place.address_components[3] && place.address_components[3].short_name || '');
+        window.weatherApp.getWeather();
       });
     }
     </script>
