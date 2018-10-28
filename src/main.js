@@ -39,8 +39,8 @@ new Vue({
           this.sunrise = new Date(response.data.sys.sunrise*1000).toLocaleTimeString("en-GB");
           this.sunset = new Date(response.data.sys.sunset*1000).toLocaleTimeString("en-GB");
           if (this.new_city) {
-            this.weatherApp.switchCity();
-          }
+            this.switchCity();
+          };
       })
       .catch(error => {
         alert("Sorry could not find " + this.new_city)
