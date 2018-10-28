@@ -20,7 +20,6 @@ new Vue({
   },
   methods: {
     getWeather() {
-      //let url = "http://api.openweathermap.org/data/2.5/weather?q=toronto&units=metric&APPID=be979721f16e8857ea19be1e4316b84b";
       axios
         .get("http://api.openweathermap.org/data/2.5/weather", {
           params: {
@@ -39,9 +38,9 @@ new Vue({
           this.overcast = response.data.weather[0].description;
           this.sunrise = new Date(response.data.sys.sunrise*1000).toLocaleTimeString("en-GB");
           this.sunset = new Date(response.data.sys.sunset*1000).toLocaleTimeString("en-GB");
-          if (weatherApp.new_city) {
-            window.weatherApp.switchCity();
-          };
+          if (this.new_city) {
+            this.weatherApp.switchCity();
+          }
       })
       .catch(error => {
         alert("Sorry could not find " + this.new_city)
