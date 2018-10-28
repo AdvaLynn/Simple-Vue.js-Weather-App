@@ -19,3 +19,12 @@ In freshii-challenge/src/main.js replace [Weather-API] with OpenWeatherMap API
 npm run serve
 ```
 
+Goals:
+1. User should be able to see current weather in either Waterloo or Toronto.
+This is achieved using the "Switch to X" button on the right of the page. It calls a Vue.js method switchCity() in main.js.
+
+2. User should be able to change between the two locations, seeing only one at a time.
+All data of a certain city is availiable one at a time, once the city is searched for, or the "Switch to X" button is pressed.
+
+3. User should be able to refresh the weather data without reloading the page.
+The weather api data is called every 5 minutes, using a timer in main.js.
